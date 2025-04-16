@@ -1,156 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-gray-100 text-gray-800">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Button Playground</title>
+  <title>UI Component Templates</title>
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/feather-icons"></script>
 </head>
-<body class="bg-gray-100 min-h-screen p-6">
+<body class="min-h-screen flex flex-col items-center p-6">
 
-  <h1 class="text-3xl font-bold mb-8 text-center">🎨 Button Playground</h1>
+  <!-- Header -->
+  <header class="text-center mb-10">
+    <h1 class="text-4xl font-bold mb-2">UI Component Templates</h1>
+    <p class="text-gray-600 text-lg">Pilih komponen UI yang ingin kamu lihat.</p>
+  </header>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="buttonWrapper">
-    <!-- Dynamic cards -->
-  </div>
+  <!-- Grid Component Cards -->
+  <main class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
 
-  <script>
-    const buttonTypes = [
-      { name: "Solid", baseClass: "text-white px-4 py-2 rounded" },
-      { name: "Outline", baseClass: "border px-4 py-2 rounded" },
-      { name: "Rounded Full", baseClass: "text-white px-4 py-2 rounded-full" },
-      { name: "Ghost", baseClass: "px-4 py-2 bg-transparent border" },
-    ];
+    <!-- Button Template -->
+    <a href="button.html" class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-all hover:scale-[1.02]">
+      <h2 class="text-xl font-semibold mb-2">🔘 Button</h2>
+      <p class="text-gray-500">Contoh tombol dengan berbagai gaya dan efek hover.</p>
+    </a>
 
-    const buttonWrapper = document.getElementById('buttonWrapper');
+    <!-- Alert Template -->
+    <a href="alert.html" class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-all hover:scale-[1.02]">
+      <h2 class="text-xl font-semibold mb-2">🚨 Alert</h2>
+      <p class="text-gray-500">Berbagai jenis notifikasi dan peringatan interaktif.</p>
+    </a>
 
-    buttonTypes.forEach((type, index) => {
-      const defaultColor = "#3b82f6";
+    <!-- Popup Template -->
+    <a href="popup.html" class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-all hover:scale-[1.02]">
+      <h2 class="text-xl font-semibold mb-2">💬 Popup / Modal</h2>
+      <p class="text-gray-500">Contoh popup/modal sederhana hingga kompleks.</p>
+    </a>
 
-      const container = document.createElement("div");
-      container.className = "bg-white shadow-md rounded-xl p-6 relative flex flex-col items-center gap-4 transition hover:shadow-lg";
+    <!-- Container Template -->
+    <a href="container.html" class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-all hover:scale-[1.02]">
+      <h2 class="text-xl font-semibold mb-2">📦 Container</h2>
+      <p class="text-gray-500">Struktur dasar layout container dan section.</p>
+    </a>
 
-      const copyWrapper = document.createElement("div");
-      copyWrapper.className = "absolute top-3 right-3 z-20";
+    <!-- Tambahkan komponen lain sesuai kebutuhan -->
+    <a href="card.html" class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-all hover:scale-[1.02]">
+      <h2 class="text-xl font-semibold mb-2">🧾 Card</h2>
+      <p class="text-gray-500">Template kartu konten dengan gambar dan teks.</p>
+    </a>
 
-      const copyGroup = document.createElement("div");
-      copyGroup.className = "relative group";
+    <a href="navbar.html" class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-all hover:scale-[1.02]">
+      <h2 class="text-xl font-semibold mb-2">📑 Navbar</h2>
+      <p class="text-gray-500">Navigasi atas yang responsif dan modern.</p>
+    </a>
 
-      const copyBtn = document.createElement("button");
-      copyBtn.className = "text-gray-500 hover:text-blue-600 transition";
-      copyBtn.innerHTML = `<i data-feather="copy" class="w-5 h-5"></i>`;
+  </main>
 
-      // Tentukan posisi: kolom paling kanan (3 kolom per baris)
-      const isRightMost = (index + 1) % 3 === 0;
-
-      // Bubble Code
-      const bubble = document.createElement("div");
-      bubble.className = `
-        absolute ${isRightMost ? 'right-full -translate-x-2' : 'left-full translate-x-2'} 
-        top-1/2 -translate-y-1/2 w-max max-w-xs p-3 rounded-lg bg-white border text-sm text-gray-800 shadow-lg
-        opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition duration-300
-        before:content-[''] before:absolute before:top-1/2 before:-translate-y-1/2 before:border-8 before:border-transparent
-        ${isRightMost ? 'before:right-[-8px] before:border-l-white' : 'before:left-[-8px] before:border-r-white'}
-      `;
-      bubble.style.whiteSpace = "pre-line";
-
-      copyGroup.appendChild(copyBtn);
-      copyGroup.appendChild(bubble);
-      copyWrapper.appendChild(copyGroup);
-
-      // Color Picker
-      const colorWrapper = document.createElement("div");
-      colorWrapper.className = "absolute top-3 left-3 z-10 group";
-
-      const colorPickerWrapper = document.createElement("label");
-      colorPickerWrapper.className = "relative cursor-pointer group";
-
-      const fakeColorCircle = document.createElement("div");
-      fakeColorCircle.className = `
-        w-10 h-10 rounded-full border-2 border-gray-300 shadow-md
-        transition duration-200 hover:scale-105
-      `;
-      fakeColorCircle.style.backgroundColor = defaultColor;
-
-      const colorInput = document.createElement("input");
-      colorInput.type = "color";
-      colorInput.value = defaultColor;
-      colorInput.className = "absolute inset-0 opacity-0 cursor-pointer";
-
-      const colorTooltip = document.createElement("div");
-      colorTooltip.className = `
-        absolute bottom-[-28px] left-1/2 transform -translate-x-1/2 px-2 py-1 text-xs bg-black text-white rounded opacity-0 
-        group-hover:opacity-100 transition pointer-events-none
-      `;
-      colorTooltip.innerText = "Ubah Warna";
-
-      colorPickerWrapper.appendChild(fakeColorCircle);
-      colorPickerWrapper.appendChild(colorInput);
-      colorWrapper.appendChild(colorPickerWrapper);
-      colorWrapper.appendChild(colorTooltip);
-
-      // Main Button
-      const button = document.createElement("button");
-      button.innerText = type.name;
-      button.className = `${type.baseClass} transition-all shadow hover:scale-105 font-semibold`;
-      button.style.backgroundColor = type.baseClass.includes('bg-transparent') || type.baseClass.includes('border') ? 'transparent' : defaultColor;
-      button.style.color = type.baseClass.includes('border') || type.baseClass.includes('bg-transparent') ? defaultColor : 'white';
-      button.style.borderColor = defaultColor;
-
-      // Update Code
-      const updateCode = () => {
-        const color = colorInput.value;
-        let fullClass = type.baseClass;
-        if (type.baseClass.includes('bg-transparent') || type.baseClass.includes('border')) {
-          fullClass += ` border-[${color}] text-[${color}]`;
-        } else {
-          fullClass += ` bg-[${color}] text-white`;
-        }
-        const code = `<button class="${fullClass}">${type.name}</button>`;
-        bubble.innerText = code;
-        return code;
-      };
-
-      // Color Change
-      colorInput.addEventListener("input", () => {
-        const color = colorInput.value;
-        fakeColorCircle.style.backgroundColor = color;
-
-        if (type.baseClass.includes('bg-transparent') || type.baseClass.includes('border')) {
-          button.style.backgroundColor = "transparent";
-          button.style.color = color;
-          button.style.borderColor = color;
-        } else {
-          button.style.backgroundColor = color;
-          button.style.color = "white";
-          button.style.borderColor = color;
-        }
-
-        updateCode();
-      });
-
-      // Copy Logic
-      copyBtn.addEventListener("click", () => {
-        const code = updateCode();
-        navigator.clipboard.writeText(code);
-        copyBtn.innerHTML = `<i data-feather="check" class="w-5 h-5 text-green-500"></i>`;
-        feather.replace();
-        setTimeout(() => {
-          copyBtn.innerHTML = `<i data-feather="copy" class="w-5 h-5"></i>`;
-          feather.replace();
-        }, 1000);
-      });
-
-      container.appendChild(colorWrapper);
-      container.appendChild(copyWrapper);
-      container.appendChild(button);
-      buttonWrapper.appendChild(container);
-
-      updateCode();
-    });
-
-    feather.replace();
-  </script>
+  <!-- Footer -->
+  <footer class="mt-16 text-sm text-gray-400">
+    &copy; 2025 UI Template Collection by Satan81 💡
+  </footer>
 </body>
 </html>
